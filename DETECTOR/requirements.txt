@@ -1,5 +1,5 @@
 # Core dependencies
-opencv-python>=4.8.0
+#opencv-python>=4.8.0
 numpy>=1.24.0
 flask>=2.0.0
 flask-socketio>=5.0.0
@@ -19,7 +19,7 @@ pillow>=8.0.0  # For image processing
 imutils>=0.5.4  # For OpenCV utilities
 
 # For Raspberry Pi, use a lighter OpenCV implementation
-# opencv-python-headless>=4.8.0; platform_machine == "armv7l" or platform_machine == "aarch64"
+opencv-python-headless>=4.8.0; platform_machine == "armv7l" or platform_machine == "aarch64"
 
 # Development tools (optional)
 pylint>=2.8.0
