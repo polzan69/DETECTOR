@@ -8,6 +8,9 @@ import base64
 import io
 from PIL import Image
 
+# Detect if running in Streamlit Cloud
+is_cloud = os.environ.get('STREAMLIT_SHARING', '') or os.environ.get('STREAMLIT_CLOUD', '')
+
 # Set page config
 st.set_page_config(
     page_title="Face Detection App",
@@ -158,9 +161,13 @@ def main():
     detector = load_face_detector(detection_confidence)
     
     # Camera input or file upload option
-    option = st.sidebar.radio("Input Source", ["Camera", "Upload Image"])
+    if is_cloud:
+        option = "Upload Image"
+        st.info("Camera mode is disabled in cloud deployment. Please use image upload instead.")
+    else:
+        option = st.sidebar.radio("Input Source", ["Camera", "Upload Image"])
     
-    if option == "Camera":
+    if option == "Camera" and not is_cloud:
         st.header("Live Camera Feed")
         
         # Start/stop camera buttons
