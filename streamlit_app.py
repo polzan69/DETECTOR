@@ -9,7 +9,7 @@ import io
 from PIL import Image
 
 # Detect if running in Streamlit Cloud
-is_cloud = os.environ.get('STREAMLIT_SHARING', '') or os.environ.get('STREAMLIT_CLOUD', '')
+is_cloud = os.environ.get('STREAMLIT_SHARING', '') or os.environ.get('STREAMLIT_CLOUD', '') or True  # Force cloud mode for deployment
 
 # Set page config
 st.set_page_config(
@@ -19,8 +19,9 @@ st.set_page_config(
 )
 
 # Define paths for model files
-DETECTOR_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'DETECTOR')
-FACE_DETECTOR_DIR = os.path.join(DETECTOR_DIR, 'face_detector')
+# DETECTOR_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'DETECTOR')
+# FACE_DETECTOR_DIR = os.path.join(DETECTOR_DIR, 'face_detector')
+FACE_DETECTOR_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'face_detector')
 
 # Standalone DNNFaceDetector class
 class DNNFaceDetector:
