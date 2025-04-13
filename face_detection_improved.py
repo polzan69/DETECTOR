@@ -3,7 +3,7 @@ import numpy as np
 import time
 import os
 from datetime import datetime
-from flask import Flask, Response, render_template_string, send_file, jsonify
+from flask import Flask, Response, render_template_string, send_file, jsonify, request
 from flask_socketio import SocketIO, emit
 import base64
 import threading
@@ -1299,6 +1299,17 @@ def setup_ngrok(port=5000):
         traceback.print_exc()
         return None
     
+# Add shutdown endpoint for remote control
+@app.route('/shutdown')
+def shutdown_server():
+    """Shutdown the server remotely"""
+    print("Shutdown request received - shutting down server...")
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return 'Server shutting down...'
+
 if __name__ == '__main__':
     # Initialize face detectors
     if not init_face_detectors():
