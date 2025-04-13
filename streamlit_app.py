@@ -12,8 +12,9 @@ import subprocess
 import socket
 from PIL import Image
 
-# Detect if running in Streamlit Cloud
-is_cloud = os.environ.get('STREAMLIT_SHARING', '') or os.environ.get('STREAMLIT_CLOUD', '') or False
+# Detect if running in Streamlit Cloud - force to True if we detect we're in the cloud
+is_cloud = os.environ.get('STREAMLIT_SHARING', '') or os.environ.get('STREAMLIT_CLOUD', '')
+is_cloud = True if '/mount/src/detector' in os.getcwd() else is_cloud
 
 # Set page config
 st.set_page_config(
@@ -220,7 +221,25 @@ def main():
 # Streamlit Cloud mode - uses Streamlit components directly
 def cloud_mode_ui():
     st.header("Face Detection (Cloud Mode)")
-    st.info("Running in Streamlit Cloud. Face detection is performed directly in the app.")
+    
+    st.warning("""
+    **Running in Streamlit Cloud mode.**
+    
+    In this environment, you can upload and process images, but the live camera streaming functionality is not available.
+    
+    To use the live camera streaming:
+    1. Download the code from GitHub
+    2. Run it locally on your computer
+    3. Use the server controls to start the streaming server
+    """)
+    
+    # Add a link to the GitHub repository
+    st.markdown("""
+    ### Download the Full Code
+    Get the complete code from the GitHub repository to run the streaming server locally:
+    
+    [GitHub Repository](https://github.com/YOUR_USERNAME/detector)
+    """)
     
     # Sidebar with options
     st.sidebar.title("Settings")
